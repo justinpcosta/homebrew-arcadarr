@@ -5,7 +5,7 @@ class Arcadarr < Formula
   homepage "https://github.com/arcadarr/arcadarr"
   # Both `url` and `sha256` are rewritten by the release workflow on tag.
   url     "https://github.com/justinpcosta/arcadarr/releases/download/v0.1.0/arcadarr-0.1.0.tar.gz"
-  sha256  "208b43921f218ad0b0b7fb4ca87c3d2ffea1fe3f3881002f8fd8cc92184128da"
+  sha256  "d521e89613b999e97853d52e3e51a1c1444be8996299e4daf324e41854c47d8f"
   license "MIT"
 
   depends_on "python@3.11"
