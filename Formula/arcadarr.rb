@@ -4,8 +4,8 @@ class Arcadarr < Formula
   desc     "*arr-style ROM library manager for retro games"
   homepage "https://github.com/arcadarr/arcadarr"
   # Both `url` and `sha256` are rewritten by the release workflow on tag.
-  url     "https://github.com/justinpcosta/arcadarr/releases/download/v0.0.1/arcadarr-0.0.1.tar.gz"
-  sha256  "63421d371099c4cda41766bfccb7650d83f1171280f37ef81168b4e0372df270"
+  url     "https://github.com/justinpcosta/arcadarr/releases/download/v0.0.2/arcadarr-0.0.1.tar.gz"
+  sha256  "93d997be5f9d38e41ace3a1b4747a97fc1dce20a794ffe426202f6ebba63c82e"
   license "MIT"
 
   depends_on "python@3.11"
