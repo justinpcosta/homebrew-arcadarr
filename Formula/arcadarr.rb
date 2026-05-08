@@ -2,11 +2,11 @@ class Arcadarr < Formula
   include Language::Python::Virtualenv
 
   desc     "*arr-style ROM library manager for retro games"
-  homepage "https://github.com/arcadarr/arcadarr"
+  homepage "https://github.com/justinpcosta/arcadarr"
   # Both `url` and `sha256` are rewritten by the release workflow on tag.
-  url     "https://github.com/justinpcosta/arcadarr/releases/download/v0.9.2/arcadarr-0.9.2.tar.gz"
-  sha256  "cc3e55b74c2b5f870a28e56c348ab64e78b2bdb143c1435b14daf117a29c6513"
-  license "MIT"
+  url     "https://github.com/justinpcosta/arcadarr/releases/download/v0.10.0/arcadarr-0.10.0.tar.gz"
+  sha256  "946ac4c5de3bf268df26d9306484b77dcd7140fe4a2c8eea4d20124c20174256"
+  license "GPL-3.0-or-later"
 
   depends_on "python@3.11"
 
@@ -33,7 +33,24 @@ class Arcadarr < Formula
   end
 
   test do
-    output = shell_output("#{bin}/arcadarr --help 2>&1", 2)
-    assert_match(/arcadarr/i, output)
+    # `arcadarr --help` is the lightest sanity check — it doesn't open
+    # the database or bind a port. Confirms the venv linked, the
+    # console_scripts entry point resolves, and the subcommand
+    # parser registers everything we expect.
+    output = shell_output("#{bin}/arcadarr --help 2>&1")
+    assert_match(/serve/, output)
+    assert_match(/reset-auth/, output)
+    assert_match(/backup/, output)
+    assert_match(/migrate-db/, output)
+
+    # `arcadarr platforms` against an empty data dir confirms we can
+    # spin up the SQLAlchemy engine and run a query end-to-end. Use
+    # the Homebrew test sandbox's testpath so we don't touch the
+    # real install's data dir.
+    ENV["ARCADARR_DATA_DIR"] = testpath/"arcadarr-data"
+    plat = shell_output("#{bin}/arcadarr platforms 2>&1")
+    # Empty DB; just confirm the command succeeded — output may be
+    # blank if no platforms have been seeded by a server boot yet.
+    refute_match(/Traceback|Error/, plat)
   end
 end
